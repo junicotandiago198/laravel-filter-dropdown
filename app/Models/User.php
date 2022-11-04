@@ -43,6 +43,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function getFullNameAttribute()
+    {
+        $fullName = ucfirst($this->fname) . ' ' . ucfirst($this->lname);
+        if(strlen($fullName) <= 20) {
+            return $fullName;
+        } else {
+            return substr($fullName, 0, 20) . '...';
+        }
+    }
+
     public static function getUsers() {
         $users = DB::table('users');
         return $users->paginate(PER_PAGE_LIMIT);

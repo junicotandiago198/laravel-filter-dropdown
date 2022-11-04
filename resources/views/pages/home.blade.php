@@ -17,8 +17,12 @@
             {{ $key->address }}
           </p>
           <div class="user">
+            @php
+              $user=App\Models\User::find($key->id)
+            @endphp
             <img src="{{ asset('assets/images/user-3.jpg') }}" alt="">
             <div class="key-info">
+              <h5>{{ $user['fullname'] }}</h5>
               <small>{{ date('d.m.Y H:i:s', strtotime($key->created_at)) }}</small>
             </div>
           </div>
