@@ -3,39 +3,29 @@
 
   @include('includes.search')
   {{-- @include('includes.fillter') --}}
-  
-  <div class="container">
-    @foreach ($users as $key)
-      <div class="card">
-        <div class="card-header">
-          <img src="{{ asset('assets/images/city.jpeg') }}" alt="">
-        </div>
-        <div class="card-body">
-          <span class="tag tag-pink">{{ $key->type }}</span>
-          <h4>{{ $key->email }}</h4>
-          <p>
-            {{ $key->address }}
-          </p>
-          <div class="user">
-            @php
-              $user=App\Models\User::find($key->id)
-            @endphp
-            <img src="{{ asset('assets/images/user-3.jpg') }}" alt="">
-            <div class="key-info">
-              <h5>{{ $user['fullname'] }}</h5>
-              <small>{{ date('d.m.Y H:i:s', strtotime($key->created_at)) }}</small>
-            </div>
-          </div>
-        </div>
-      </div>
-    @endforeach
-    <div class="">
-      {!! $users->links() !!}
-    </div>
+  <div id="user_data">
+    @include('pages.user_data')
   </div>
-  @endsection
-
+@endsection
+  
   @push('scripts')
+      <script>
+        $(document).ready(function() {
+          $(document).on('click', '.pagination a', function(event) {
+            event.preventDefault();
+            var page = $(this).attr('href').split('page=')[1];
+            getMoreUsers(page);
+          });
+        });
 
+        function getMoreUsers(page) {
+          $.ajax({
+            type: "GET",
+            url: "{{ route('users.get-more-users') }}" + "?page=" + page,
+            success:function(data) {
+              $('#user_data').html(data);
+            }
+          });
+        }
+      </script>
   @endpush
-

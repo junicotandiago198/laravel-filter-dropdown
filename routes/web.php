@@ -15,3 +15,5 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/', [HomeController::class, 'index']);
+
+Route::get('/users.get-more-users', [HomeController::class, 'getMoreUsers'])->name('users.get-more-users');

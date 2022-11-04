@@ -12,4 +12,12 @@ class HomeController extends Controller
         $users = User::getUsers();
         return view('pages.home')->with('users', $users);
     }
+
+    public function getMoreUsers(Request $request) 
+    {
+        if($request->ajax()) {
+            $users = User::getUsers();
+            return view('pages.user_data', compact('users'))->render();
+        }
+    }
 }
