@@ -6,10 +6,13 @@
         </div>
         <div class="card-body">
             <span class="tag tag-pink">{{ $key->type }}</span>
+            <hr>
+            <span class="tag tag-salary">Salary: {{ $key->salary }}</span>
             <h4>{{ $key->email }}</h4>
             <p>
-            {{ $key->address }}
+                {{ $key->address }}
             </p>
+            <h4>Country: {{ $key->country }}</h4>
             <div class="user">
             @php
                 $user=App\Models\User::find($key->id)

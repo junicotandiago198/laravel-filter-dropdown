@@ -31,8 +31,10 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'type' => $randomType,
             'country' => $this->faker->country,
+            'salary' => $this->faker->unique()->numberBetween($min = 1000, $max = 500000),
             'address' => $this->faker->address,
             'password' => Hash::make('123456'),
+            'social_photo' => $this->faker->imageUrl($width = 200, $height = 200),
             'remember_token' => Str::random(10)
 
         ];

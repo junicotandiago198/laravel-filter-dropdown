@@ -2,7 +2,7 @@
 @section('content')
 
   @include('includes.search')
-  {{-- @include('includes.fillter') --}}
+  @include('includes.fillter')
   <div id="user_data">
     @include('pages.user_data')
   </div>
@@ -20,16 +20,41 @@
           $('#search').on('keyup', function() {
             $value = $(this).val();
             getMoreUsers(1);
+          });
+
+          $('#country').on('change', function() {
+            getMoreUsers();
+          });
+
+          $('#sort_by').on('change', function() {
+            getMoreUsers();
+          });
+
+          $('#salary_range').on('change', function() {
+            getMoreUsers();
           })
         });
 
         function getMoreUsers(page) {
 
           var search = $('#search').val();
+
+          // Search on based of country
+          var selectedCountry = $("#country option:selected").val();
+
+          // Search on based of type
+          var selectedType = $("#sort_by option:selected").val();
+          
+          // Search on based of salary
+          var selectedRange = $("#salary_range option:selected").val();
+
           $.ajax({
             type: "GET",
             data: {
-              'search_query':search
+              'search_query':search,
+              'country': selectedCountry,
+              'sort_by': selectedType,
+              'range': selectedRange
             },
             url: "{{ route('users.get-more-users') }}" + "?page=" + page,
             success:function(data) {
